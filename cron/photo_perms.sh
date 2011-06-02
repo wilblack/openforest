@@ -1,2 +1,4 @@
-#!/bin/bash
-chmod -R 777 /home/wilblack/android
+#!/bin/sh
+chown -R www-data /home/wilblack/android
+chmod -R 755 /home/wilblack/android
+

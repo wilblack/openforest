@@ -5,10 +5,9 @@ from django.contrib.auth.models import User
 
 class Droid():
     '''
-    Class to handle a WoWCombatLog file.
-    File naming convention
-        WoWCombatLog_MM-DD-YYYYhHH.txt
-        
+    Class to handle a uploads from my Android.
+    Set Droid.path to wherever the upload directory is.
+           
     '''
     
     def __init__(self):
@@ -16,7 +15,7 @@ class Droid():
         self.bn = 'uid_1_'      # file basename used torename file.
         self.file = None
         self.fname =""
-        self.dest_path = 'home/wilblack/social/site_media/media/photologue/photos/'
+        self.dest_path = '/home/wilblack/social/site_media/media/photologue/photos/'
         
     def ls(self):
         return os.listdir(self.path)
@@ -59,22 +58,22 @@ class Droid():
         pName=l[0]+'p.'+l[1]
         os.rename(os.path.join(self.path,self.fname),os.path.join(self.path,pName))
     
-    def load(self):
+    def load_pics(self):
         '''
         Grabs all unprocessed files with extensions .png or .jpg
         and loads them into photologue
         '''
         import shutil
-        member = User.objects.get(username='wilblack')
+        member = User.objects.get(username='wilblack') # Open forest member object
         for l in self.ls():
             if os.path.splitext(l)[1] in ['.png','.jpg','.jpeg']:
                 src_image=os.path.join(self.path,l)
                 dest_image = os.path.join(self.dest_path,l)
-                shutil.move(src_image,dest_image)
+                shutil.move(src_image,self.dest_path)
                 
                 img = Image(title=l, 
                             member=member, 
-                            image=dest_image,
+                            image="photologue/photos/"+l,
                             safetylevel=1,
                             )
                 img.save()

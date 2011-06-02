@@ -1,0 +1,41 @@
+<div id="div_id_map" class="ctrlHolder">
+  <label for='map'>New feature</label>
+  
+ <select onchange='set_geomtype(this);'>
+   <option value='0'>Select Feature</option>
+   <option value='point'>Tree</option>
+   <option value='polygon'>Woodlot</option>
+   <option value='polygon'>Park</option>
+   <option value='point'>Forest</option>
+   <option value='polygon'>Garden</option>
+  </select>
+ </div>
+ 
+ <p id='map-console' class="formHint"></p>
+<div id="map"></div>
+
+<script type='text/javascript'>
+
+Map.height='400px';
+Map.width='600px';	
+Map.init('#map');	
+function set_geomtype(that){
+	Map.clear_all();
+	var type= $(that).val();
+	var msg='';
+	var val=0;
+	switch (type){
+		case 'point':
+			msg="Place the marker on the map by clicking on your projects location.";
+			val=1;
+			break;
+		case 'polygon':
+			msg="Draw the area of your project by clicking on the markers. You can add new corners by clicking on the black border.";
+			val=3;
+			break;
+	}	
+	$('#map-console').html(msg);
+	Map.createFeature(type);
+	$("[name=geomtype]").val(val);
+}			
+</script>

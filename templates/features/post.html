@@ -1,0 +1,69 @@
+{% extends "features/base.html" %}
+
+{% load i18n %}
+{% load humanize %}
+{% load account_tags %}
+{% load comments_tag %}
+{% load tagging_tags %}
+{% load blog_tags %}
+{% load theme_tags %}
+
+{% block head_title %}{% blocktrans %}Blog Post{% endblocktrans %} : {{ post.title }}{% endblock %}
+
+{% block extra_head %}
+    <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for All Users" href="/feeds/posts/all/" />
+    <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for User {{ post.author.username }}" href="/feeds/posts/only/{{ post.author.username }}/" />
+	Features: {{ features }}	
+	<script type='text/javascript'>
+	$(document).ready(function(){
+		Map.width = '450px';
+		Map.height = '400px';
+		Map.zoom = 12;
+		Map.mapType = google.maps.MapTypeId.HYBRID;
+		
+		Map.init("#map_canvas");
+		Map.layers[0] = {};
+		Map.layers[0].geom=[];
+
+		{% for f in features %}
+		  var geom = {{f.geom}};
+		  {% if f.geomtype == 1 %}
+		    Map.layers[0].geom[{{forloop.counter0}}] = new google.maps.Marker({
+					position:new google.maps.LatLng(geom[0],geom[1]),
+					map:Map.map
+				});
+		  {% endif %}
+		  {% if f.geomtype == 3 %}  
+			Map.layers[0].geom[{{forloop.counter0}}] = Map.list2polygon(geom); //list2polygon takes lat, lon
+			Map.layers[0].geom[{{forloop.counter0}}].setMap(Map.map);
+		  {% endif %}
+		{% endfor %}
+		Map.resize(Map.layers[0]);
+	});
+	
+	
+	</script>	
+{% endblock %}
+
+{% block body %}
+    
+    <div class="blog-post">
+        <h2>{{ post.title }}</h2>
+        <div class="blog-meta"><p>Posted by: <a href="{% url profile_detail post.author.username %}">{% user_display post.author %}</a> on {{ post.publish|date }}</p></div>
+        <div class="blog-tags">
+            <p>{% silk "tag_blue" %}
+            {% tags_for_object post as tags %}
+            {% for tag in tags %}
+                <a href="/tags/{{ tag }}">{{ tag }}</a>
+            {% endfor %}</p>
+            {% ifequal post.author request.user %}
+                <a href="{% url feature_edit post.id %}">Edit {% if post.project_of %}Feature{% else %}Project{%endif%}</a>
+            {% endifequal %}
+        </div>
+        
+        {% show_feature post %}
+    </div>
+    
+    <h3>Journal Entries for this {% if post.feature_of %}feature{%else%}project{% endif %}:</h3>
+    {% comments post %}
+{% endblock %}

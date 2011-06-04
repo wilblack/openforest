@@ -26,7 +26,10 @@
         {% autopaginate features %}
 
             {% for blog_post in features %}
+                <div>
                 {% show_feature blog_post %}
+                {% show_feature_meta blog_post %}
+                </div>
             {% endfor %}
 
         {% paginate %}

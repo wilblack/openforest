@@ -19,6 +19,10 @@ def show_project(blog_post, features):
     return {"blog_post": blog_post,
             "features":features}
 
+@register.inclusion_tag("features/meta.html")
+def show_feature_meta(blog_post):
+    return {"blog_post": blog_post}
+
 #@register.inclusion_tag("features/feature_item.html")
 #def show_blog_post(blog_post):
 #    return {"blog_post": blog_post}

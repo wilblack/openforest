@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 
 from tagging.fields import TagField
 from tagging.models import Tag
+from pinax.apps.photos.models import PhotoSet, Image
+
 from threadedcomments.models import ThreadedComment
 
 if "notification" in settings.INSTALLED_APPS:
@@ -17,12 +19,15 @@ else:
     notification = None
 
 MARKUP_CHOICES = getattr(settings, "MARKUP_CHOICES", [])
+#SHARE_CHOICES =  [(1,'Private'), (2,'Public')]
+STATUS_CHOICES = ((1, _("Private")),(2, _("Public")),)
+GEOMTYPE_CHOICES = [(1,'Point'),(2,'Polyline'),(3,'Polygon')]
+FEATURETYPE_CHOICES = [(1,'Lot'),(2,'Marker'),(3,'Patch'), (4,'Path'), (5,'Tree')]
 
 class Post(models.Model):
     """
     A model which holds a single post.
     """
-    
     STATUS_CHOICES = (
         (1, _("Private")),
         (2, _("Public")),
@@ -42,6 +47,10 @@ class Post(models.Model):
     publish = models.DateTimeField(_("publish"), default=datetime.now)
     created_at = models.DateTimeField(_("created at"), default=datetime.now)
     updated_at = models.DateTimeField(_("updated at"))
+    image = models.ForeignKey(Image,blank=True, null=True)
+    photoset = models.ForeignKey(PhotoSet, blank=True, null=True)
+    
+            
     markup = models.CharField(_(u"Post Content Markup"),
         max_length = 20,
         choices = MARKUP_CHOICES,
@@ -71,10 +80,6 @@ class Post(models.Model):
             "slug": self.slug
         })
 
-
-SHARE_CHOICES =  [(1,'Private'), (2,'Public')]
-GEOMTYPE_CHOICES = [(1,'Point'),(2,'Polyline'),(3,'Polygon')]
-FEATURETYPE_CHOICES = [(1,'Lot'),(2,'Marker'),(3,'Patch'), (4,'Path'), (5,'Tree')]
 '''
 class Project(Post):
     sharetype=models.IntegerField(choices=SHARE_CHOICES, default=2 )
@@ -99,11 +104,12 @@ class Feature(Post):
     geoDjango model. 
     '''
     
-    sharetype = models.IntegerField(choices=SHARE_CHOICES, default=2)
+ #   sharetype = models.IntegerField(choices=SHARE_CHOICES, default=2)
     feature_of=models.ForeignKey('self', blank=True, null=True)
     barcode = models.CharField(max_length=25, blank=True)
     geomtype = models.IntegerField('Geometry type', choices=GEOMTYPE_CHOICES) 
     geom = models.TextField()
+    
     
     class Meta:
         verbose_name = _("feature")

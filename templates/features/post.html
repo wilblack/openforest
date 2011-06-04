@@ -1,5 +1,6 @@
 {% extends "features/base.html" %}
 
+{% load switchcase %}
 {% load i18n %}
 {% load humanize %}
 {% load account_tags %}
@@ -16,7 +17,7 @@
 	Features: {{ features }}	
 	<script type='text/javascript'>
 	$(document).ready(function(){
-		Map.width = '450px';
+		Map.width = '600px';
 		Map.height = '400px';
 		Map.zoom = 12;
 		Map.mapType = google.maps.MapTypeId.HYBRID;
@@ -61,7 +62,51 @@
             {% endifequal %}
         </div>
         
-        {% show_feature post %}
+        
+        <div>
+	      <div id="map_canvas" class="left"></div>
+	      
+	      <div id="featureList">
+	      	<h3>Freatures:</h3>
+	      	<ul>
+	      	{% for f in post.feature_set.all %}
+	      	<li><a href="{{f.get_absolute_url}}">{{f.title|safe}}</a></li>
+	      	{%endfor%}
+	      	</ul>
+	      </div>
+	      <div class="clearFix"></div>
+    	</div>
+    	
+    	<div>
+    		{% if post.markup %}
+            	{% switch post.markup %}
+                	{% case 'rst' %} {{ post.body|safe }} {% endcase %}
+                    {% case 'mrk' %} {{ post.body|safe }} {% endcase %}
+                    {% case 'txl' %} {{ post.body|safe }} {% endcase %}
+                {% endswitch %}
+            {% else %}
+                    {{ post.body|safe }}
+            {% endif %}
+    	</div>
+    	<div>
+    		<h3>Photo Gallery</h3>
+    		{% with post.photoset.image_set.all as photos %}
+    		{% if photos %}
+                    <div class="clearfix">
+                    {% for photo in photos %}
+                        <div class="gallery-photo-thumb">
+                            <a href="/photos/details/{{ photo.id }}/"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                   {% trans "No photos uploaded yet." %}
+                {% endif %}
+               {% endwith %}
+    	</div>
+        
+        
+        {# show_feature post #}
     </div>
     
     <h3>Journal Entries for this {% if post.feature_of %}feature{%else%}project{% endif %}:</h3>

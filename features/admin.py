@@ -10,7 +10,7 @@ from django.contrib import admin
 #    prepopulated_fields = {"slug": ["title"]}
 
 class FeatureAdmin(admin.ModelAdmin):
-    list_display = ["title", "publish", "status", "sharetype","geomtype", "feature_of"]
+    list_display = ["title", "publish", "status", "geomtype", "feature_of",'image']
     list_filter = ["publish", "status","feature_of"]
     search_fields = ["title", "body", "tease"]
     prepopulated_fields = {"slug": ["title"]}

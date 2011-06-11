@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load ifsetting_tag %}
+{% load blog_tags %}
 
 {% block head_title %}{% trans "Welcome" %}{% endblock %}
 
@@ -20,7 +21,10 @@
 		var myMapType = new google.maps.StyledMapType(style1, styledMapOptions);
 		Map.map.mapTypes.set('plain', myMapType);
 		Map.map.setMapTypeId('plain');
+		Map.layers[0] = {};
+		Map.layers[0].geom=[];
 		
+		{% include "features/draw_features.html" %}
 		
 		
 	});
@@ -43,9 +47,14 @@
     <div id="map_canvas"></div>
         
     <hr />
+    <h2>Latest Features Added</h2>
+    {% for f in features %}
+    	{% show_feature f %}
+    {%endfor%}
+    
     {% if user.is_authenticated %}
         {% url what_next as what_next_url %}
-        <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}">What Next</a>?{% endblocktrans %}</p>
+        <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}">Things to do</a>?{% endblocktrans %}</p>
     {% else %}
         {% url acct_login as login_url %}
         {% ifsetting ACCOUNT_OPEN_SIGNUP %}

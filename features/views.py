@@ -2,18 +2,21 @@ import datetime
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.generic import date_based
 
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+from simplejson import dumps as json
 from features.models import Post, Feature
 from features.forms import *
+from threadedcomments.models import FreeThreadedComment
 
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
@@ -60,6 +63,7 @@ def post(request, username, year, month, slug,
     return render_to_response(template_name, {
         "post": post[0],
         "features":post | features,
+        "free_threaded_comments": FreeThreadedComment.objects.filter(name='Android',object_id=post[0].id)
     }, context_instance=RequestContext(request))
 
 
@@ -181,3 +185,25 @@ def edit(request, id, form_class=FeatureForm, template_name="features/edit.html"
         "blog_form": blog_form,
         "post": post,
     }, context_instance=RequestContext(request))
+
+def list(request):
+    
+    features = Feature.objects.filter(feature_of__isnull=True)
+    out = [{'title':f.title, 'fid':f.id} for f in features]
+        
+    if 'callback' in request.GET:
+        out = request.GET['callback']+"("+json+")"        
+    else: 
+        out=json(out)
+    return HttpResponse(out)
+    
+def update(request):
+    post = request.POST
+    fid=post['fid']
+    photos = post['data']['photos']
+    f = get_object_or_404(Feature, id=id)
+       
+    
+
+
+

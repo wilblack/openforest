@@ -26,21 +26,14 @@
 		Map.layers[0] = {};
 		Map.layers[0].geom=[];
 
-		{% for f in features %}
-		  var geom = {{f.geom}};
-		  {% if f.geomtype == 1 %}
-		    Map.layers[0].geom[{{forloop.counter0}}] = new google.maps.Marker({
-					position:new google.maps.LatLng(geom[0],geom[1]),
-					map:Map.map
-				});
-		  {% endif %}
-		  {% if f.geomtype == 3 %}  
-			Map.layers[0].geom[{{forloop.counter0}}] = Map.list2polygon(geom); //list2polygon takes lat, lon
-			Map.layers[0].geom[{{forloop.counter0}}].setMap(Map.map);
-		  {% endif %}
-		{% endfor %}
+		{% include "features/draw_features.html" %}
+		
 		Map.resize(Map.layers[0]);
 	});
+	
+
+	
+	
 	
 	
 	</script>	
@@ -67,7 +60,7 @@
 	      <div id="map_canvas" class="left"></div>
 	      
 	      <div id="featureList">
-	      	<h3>Freatures:</h3>
+	      	<h3>Features:</h3>
 	      	<ul>
 	      	{% for f in post.feature_set.all %}
 	      	<li><a href="{{f.get_absolute_url}}">{{f.title|safe}}</a></li>
@@ -111,4 +104,13 @@
     
     <h3>Journal Entries for this {% if post.feature_of %}feature{%else%}project{% endif %}:</h3>
     {% comments post %}
+    {% if free_threaded_comments %}
+    <h2>Mobile Uploads</h2>
+    {% for ftc in free_threaded_comments %}
+    <div>
+    {{ftc.date_submitted}} - {{ftc.comment}}
+    </div>
+    {% endfor %}
+	{%endif%}
+	
 {% endblock %}

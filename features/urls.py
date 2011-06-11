@@ -28,6 +28,12 @@ urlpatterns = patterns("",
     #destory blog post
     url(r"^destroy/(\d+)/$", "features.views.destroy", name="feature_destroy"),
     
+    # API STUFF
+    url(r"^list.json","features.views.list", name="feature_list_json"),
+    url(r"^update.json","features.views.update", name="feature_update_json"),
+    
+        
+    
     # ajax validation
     (r"^validate/$", "ajax_validation.views.validate", {
         "form_class": FeatureForm,

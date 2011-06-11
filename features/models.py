@@ -79,21 +79,6 @@ class Post(models.Model):
             "month": "%02d" % self.publish.month,
             "slug": self.slug
         })
-
-'''
-class Project(Post):
-    sharetype=models.IntegerField(choices=SHARE_CHOICES, default=2 )
-    geom = models.TextField();
-    geomtype = models.IntegerField('Geometry type', choices=GEOMTYPE_CHOICES) 
-    
-    def get_absolute_url(self):
-        return reverse("blog_post", kwargs={
-            "username": self.author.username,
-            "year": self.publish.year,
-            "month": "%02d" % self.publish.month,
-            "slug": self.slug
-        })
-'''
    
 class Feature(Post):
     ''' 
@@ -103,14 +88,11 @@ class Feature(Post):
     @@@ In the future this should be converted to a 
     geoDjango model. 
     '''
-    
- #   sharetype = models.IntegerField(choices=SHARE_CHOICES, default=2)
     feature_of=models.ForeignKey('self', blank=True, null=True)
     barcode = models.CharField(max_length=25, blank=True)
     geomtype = models.IntegerField('Geometry type', choices=GEOMTYPE_CHOICES) 
     geom = models.TextField()
-    
-    
+        
     class Meta:
         verbose_name = _("feature")
         verbose_name_plural = _("features")

@@ -2,6 +2,8 @@ import os
 from datetime import datetime as dt
 from pinax.apps.photos.models import Image
 from django.contrib.auth.models import User
+from threadedcomments.models import FreeThreadedComment
+from features.models import Feature
 
 class Droid():
     '''
@@ -65,17 +67,36 @@ class Droid():
         '''
         import shutil
         member = User.objects.get(username='wilblack') # Open forest member object
+                
+        newPhotos=[]        
         for l in self.ls():
             if os.path.splitext(l)[1] in ['.png','.jpg','.jpeg']:
                 src_image=os.path.join(self.path,l)
                 dest_image = os.path.join(self.dest_path,l)
-                shutil.move(src_image,self.dest_path)
+                if os.path.exists(dest_image):
+                    continue
                 
+                shutil.move(src_image,self.dest_path)
+                newPhotos.append(l)
                 img = Image(title=l, 
                             member=member, 
                             image="photologue/photos/"+l,
                             safetylevel=1,
                             )
                 img.save()
+        self.newPhotos=newPhotos
                 
+    def assign_project(self):
+       ftc=FreeThreadedComment.objects.latest()
+       if ftc.name=='Android':
+           feature = Feature.objects.get(pk=ftc.object_id)
+                      #photoList = json.loads(ftc.comment)
+           for p in self.newPhotos:
+               img = Image.objects.get(title=p)
+               img.photoset.add(feature.photoset)
+               img.save()
+           
+       
+       
+        
 

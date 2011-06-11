@@ -1,0 +1,32 @@
+{% for f in features %}
+		  var geom = {{f.geom}};
+		  {% if f.geomtype == 1 %}
+		    var marker = new google.maps.Marker({
+					position:new google.maps.LatLng(geom[0],geom[1]),
+					map:Map.map
+				});
+
+
+		    {% if f.image %}
+			var html = "<div style='width:280px; height:280px'>";
+			html += "<h4>{{f.title}}<h4>";			
+			html += "<img src='{{ f.image.get_feature_thumbnail_url }}'></img>";	
+			html += "</div>";
+			var infowindow = new google.maps.InfoWindow({
+				content:html,
+			});
+			google.maps.event.addListener(marker, 'click', function(){
+				infowindow.open(Map.map,marker);
+			});
+			{%endif%}
+			
+			Map.layers[0].geom[{{forloop.counter0}}] = marker;
+			Map.layers[0].geom[{{forloop.counter0}}].infowindow = infowindow;       									
+			// Add infowindow here
+			
+		  {% endif %}
+		  {% if f.geomtype == 3 %}  
+			Map.layers[0].geom[{{forloop.counter0}}] = Map.list2polygon(geom); //list2polygon takes lat, lon
+			Map.layers[0].geom[{{forloop.counter0}}].setMap(Map.map);
+		  {% endif %}
+		{% endfor %}

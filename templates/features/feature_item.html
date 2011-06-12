@@ -11,13 +11,13 @@
     
     <div class="blog-post-tease">
         {% if blog_post.tease %}
-             {% with blog_post.tease|truncatewords:"25" as body %}
+             {% with blog_post.tease|truncatewords:"150" as body %}
 
                   {{ body|safe }} 
                                             
             {% endwith %}
         {% else %}
-            {% with blog_post.body|truncatewords:"25" as body %}
+            {% with blog_post.body|truncatewords:"150" as body %}
                 {% if blog_post.markup %}
                     {% switch blog_post.markup %}
                         {% case 'rst' %} {{ body|safe }} {% endcase %}
@@ -30,9 +30,5 @@
             {% endwith %}
         {% endif %}
     </div>
-        
-    <div>
-    	{{blog_post.body|safe}}
-    </div>
-		
+    
 </div>

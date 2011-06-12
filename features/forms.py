@@ -8,12 +8,16 @@ from features.models import Feature
 
 
 class FeatureForm(forms.ModelForm):
+    from django.template.defaultfilters import slugify
     
-    slug = forms.SlugField(
-        max_length = 20,
-        help_text = _("a short version of the title consisting only of letters, numbers, underscores and hyphens."),
-    )
-    
+    slug = forms.SlugField(widget=forms.HiddenInput())
+    #    max_length = 20,
+    #    help_text = _("a short version of the title consisting only of letters, numbers, underscores and hyphens."),
+    #)
+    geom = forms.CharField(widget=forms.HiddenInput())
+    geomtype = forms.CharField(widget=forms.HiddenInput())
+    #tease = forms.CharField(widget=forms.HiddenInput())
+
     class Meta:
         model = Feature
         exclude = [
@@ -22,9 +26,14 @@ class FeatureForm(forms.ModelForm):
             "created_at",
             "updated_at",
             "publish",
-            "allow_comments"
+            "allow_comments",
+            "photoset",
+            "markup",
+            "tease"
+            
+            
         ]
-    
+        
     def __init__(self, user=None, *args, **kwargs):
         self.user = user
         super(FeatureForm, self).__init__(*args, **kwargs)

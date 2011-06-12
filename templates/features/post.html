@@ -12,9 +12,9 @@
 {% block head_title %}{% blocktrans %}Blog Post{% endblocktrans %} : {{ post.title }}{% endblock %}
 
 {% block extra_head %}
+    <script type="text/javascript" src="{{STATIC_URL}}features/mapper.js"></script>
     <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for All Users" href="/feeds/posts/all/" />
     <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for User {{ post.author.username }}" href="/feeds/posts/only/{{ post.author.username }}/" />
-	Features: {{ features }}	
 	<script type='text/javascript'>
 	$(document).ready(function(){
 		Map.width = '600px';
@@ -25,17 +25,14 @@
 		Map.init("#map_canvas");
 		Map.layers[0] = {};
 		Map.layers[0].geom=[];
-
-		{% include "features/draw_features.html" %}
-		
+	
+		window.features = {{features|safe}}
+		{# include "features/draw_features.html" #}
+		draw_features(features);  // This function is in mapper.js
 		Map.resize(Map.layers[0]);
 	});
 	
 
-	
-	
-	
-	
 	</script>	
 {% endblock %}
 

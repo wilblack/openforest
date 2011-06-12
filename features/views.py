@@ -58,11 +58,14 @@ def post(request, username, year, month, slug,
     
     if post[0].status == 1 and post[0].author != request.user:
         raise Http404
-    features = post[0].feature_set.all()
+    
+    features = post[0].feature_set.all() 
+    featureList=[f.json for f in features]
+    
     
     return render_to_response(template_name, {
         "post": post[0],
-        "features":post | features,
+        "features":json(featureList),
         "free_threaded_comments": FreeThreadedComment.objects.filter(name='Android',object_id=post[0].id)
     }, context_instance=RequestContext(request))
 

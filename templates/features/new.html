@@ -29,6 +29,13 @@
     <script type="text/javascript">
         $(function(){
             $('#blog_form').validate('{% url blog_form_validate %}', {type: 'table'});
+            
         });
     </script>
+    <script type="text/javascript" src="http://173.255.213.55/wb/media/js/jquery.slugify.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+		$('[name=slug]').slugify('[name=title]');
+  })
+  </script>  
 {% endblock %}

@@ -10,6 +10,7 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		Map.width="800px";
+		Map.height="400px";
 		Map.center=[40,-100];
 		Map.zoom=4;
 		Map.mapType=google.maps.MapTypeId.HYBRID;
@@ -25,8 +26,7 @@
 		Map.layers[0].geom=[];
 		
 		{% include "features/draw_features.html" %}
-		
-		
+			
 	});
 	</script>
 	
@@ -40,7 +40,7 @@
     
     <p>
         {% blocktrans %}
-       Creating social networks to help foster sustainable use and restoration of forested lands. 
+       A social network for people who care about our environment. This site aims to foster sustainable use and restoration of forested lands. 
         {% endblocktrans %}
     </p>
         

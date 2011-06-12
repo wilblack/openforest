@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 from tagging.fields import TagField
 from tagging.models import Tag
@@ -69,7 +70,11 @@ class Post(models.Model):
         return self.title
     
     def save(self, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
         self.updated_at = datetime.now()
+        
+        
         super(Post, self).save(**kwargs)
     
     def get_absolute_url(self):
@@ -79,6 +84,7 @@ class Post(models.Model):
             "month": "%02d" % self.publish.month,
             "slug": self.slug
         })
+
    
 class Feature(Post):
     ''' 
@@ -108,7 +114,15 @@ class Feature(Post):
             "month": "%02d" % self.publish.month,
             "slug": self.slug
         })    
-        
+    @property
+    def json(self):
+        import json
+        out={'title':super(Feature, self).__getattribute__("title"),
+             'geom':json.loads(self.geom),
+             'geomtype':self.geomtype
+             
+             }
+        return out
 # handle notification of new comments
 def new_comment(sender, instance, **kwargs):
     post = instance.content_object

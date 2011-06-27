@@ -1,0 +1,13 @@
+<p>
+Each Feature or Project in the Open Forest has a Feature Type. 
+The feature type tells other people what type of feature you 
+are mapping and helps categorize the features. 
+</p>
+<h3>Available Feature Types</h3>
+{% for ft in featureType %}
+<dl>
+<dt>{{ft.name}}</dt>
+<dd>{{ft.about}}</dd>
+
+</dl>
+{% endfor %}

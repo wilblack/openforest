@@ -15,7 +15,6 @@
             <a href="{{ blog_post.feature_of.get_absolute_url }}">{{blog_post.feature_of.title}}</a></p>
         {%endif%}
         {% if blog_post.image %}
-        <p><b>Photo:</b></p>
         	 <img src="{{ blog_post.image.get_feature_thumbnail_url }}" alt="{{ blog_post.image.title }}"/>
         {% endif %}
         <div class="blog-tags">

@@ -27,7 +27,7 @@ class FeatureForm(forms.ModelForm):
             "updated_at",
             "publish",
             "allow_comments",
-            "photoset",
+            #"photoset",
             "markup",
             "tease"
             

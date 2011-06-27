@@ -10,15 +10,22 @@
 {% load theme_tags %}
 
 {% block head_title %}{% blocktrans %}Blog Post{% endblocktrans %} : {{ post.title }}{% endblock %}
+{% block jquery_src %}http://173.255.213.55/wb/media/js/jquery-1.5.2.min.js{%endblock%}
 
 {% block extra_head %}
+     
+    <script src="http://173.255.213.55/wb/media/js/jquery-1.5.2.min.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="http://173.255.213.55/wb/media/js/gmap-0.2.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}features/mapper.js"></script>
+    <link type="text/css" href="http://173.255.213.55/wb/media/css/pikachoose/styles/tof-features-gallery.css" rel="stylesheet" />
+    
     <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for All Users" href="/feeds/posts/all/" />
     <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for User {{ post.author.username }}" href="/feeds/posts/only/{{ post.author.username }}/" />
 	<script type='text/javascript'>
 	$(document).ready(function(){
-		Map.width = '600px';
-		Map.height = '400px';
+		Map.width = '650px';
+		Map.height = '500px';
 		Map.zoom = 12;
 		Map.mapType = google.maps.MapTypeId.HYBRID;
 		
@@ -32,12 +39,10 @@
 		Map.resize(Map.layers[0]);
 	});
 	
-
 	</script>	
 {% endblock %}
 
 {% block body %}
-    
     <div class="blog-post">
         <h2>{{ post.title }}</h2>
         <div class="blog-meta"><p>Posted by: <a href="{% url profile_detail post.author.username %}">{% user_display post.author %}</a> on {{ post.publish|date }}</p></div>
@@ -78,17 +83,21 @@
                     {{ post.body|safe }}
             {% endif %}
     	</div>
-    	<div>
+    	<div id="pikachoose">
     		<h3>Photo Gallery</h3>
     		{% with post.photoset.image_set.all as photos %}
     		{% if photos %}
-                    <div class="clearfix">
+                    
+                    <ul id="pikame" class="jcarousel-skin-pika">
                     {% for photo in photos %}
+                        <!-- 
                         <div class="gallery-photo-thumb">
                             <a href="/photos/details/{{ photo.id }}/"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
                         </div>
+                        -->
+                        <li><a href="/photos/details/{{ photo.id }}/"><img src="{{ photo.get_display_url }}" alt="{{ photo.title }}"/></a><span>{{ photo.title }}</span></li>
                     {% endfor %}
-                    </div>
+                    </ul>
                 {% else %}
                    {% trans "No photos uploaded yet." %}
                 {% endif %}
@@ -111,3 +120,20 @@
 	{%endif%}
 	
 {% endblock %}
+
+
+{% block extra_body %}
+<script type="text/javascript">
+$(document).ready(function () {
+	$.getScript('http://173.255.213.55/wb/media/js/jquery.pikachoose.js',function(){
+		$("#pikame").PikaChoose({carousel:true, 
+								 autoPlay:true,
+								 transition:[0],
+								 });
+	});
+})
+
+</script>
+
+
+{%endblock%}

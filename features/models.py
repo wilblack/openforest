@@ -85,7 +85,15 @@ class Post(models.Model):
             "slug": self.slug
         })
 
-   
+
+class FeatureType(models.Model):
+    name = models.CharField(max_length=25)
+    about = models.TextField()
+    geomtype = models.IntegerField('Geometry type', choices=GEOMTYPE_CHOICES) 
+    
+    def __unicode__(self):
+        return self.name
+
 class Feature(Post):
     ''' 
     A model that extends the Blog.post model. It is used to represent a spatial 
@@ -95,10 +103,11 @@ class Feature(Post):
     geoDjango model. 
     '''
     feature_of=models.ForeignKey('self', blank=True, null=True)
+    featuretype = models.ForeignKey(FeatureType)
     barcode = models.CharField(max_length=25, blank=True)
     geomtype = models.IntegerField('Geometry type', choices=GEOMTYPE_CHOICES) 
     geom = models.TextField()
-        
+            
     class Meta:
         verbose_name = _("feature")
         verbose_name_plural = _("features")
@@ -117,12 +126,37 @@ class Feature(Post):
     @property
     def json(self):
         import json
+
+    	feature_of = self.feature_of
+    	if feature_of: feature_of = self.feature_of.title
+        
+        image = super(Feature, self).__getattribute__("image")
+        if image: image=image.get_feature_thumbnail_url()
+        
         out={'title':super(Feature, self).__getattribute__("title"),
              'geom':json.loads(self.geom),
-             'geomtype':self.geomtype
-             
+             'geomtype':self.geomtype,
+             'feature_of':feature_of,
+             'image':image,
              }
         return out
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=50)
+    type = models.ForeignKey('ProductType')
+    feature = models.ManyToMany(Feature)
+    
+    def __unicode__(self):
+        return self.name
+    
+class ProductType(models.Model):
+    name = models.CharField(max_length=50)
+    about = models.TextField()
+    
+    def __unicode__(self):
+        return self.name
+
 # handle notification of new comments
 def new_comment(sender, instance, **kwargs):
     post = instance.content_object

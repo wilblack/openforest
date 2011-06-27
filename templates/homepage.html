@@ -7,6 +7,9 @@
 {% block head_title %}{% trans "Welcome" %}{% endblock %}
 
 {% block extra_head %}
+	<script src="http://173.255.213.55/wb/media/js/jquery-1.5.2.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="http://173.255.213.55/wb/media/js/gmap-0.2.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}features/mapper.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		Map.width="800px";
@@ -16,17 +19,18 @@
 		Map.mapType=google.maps.MapTypeId.HYBRID;
 		Map.init("#map_canvas");
 
-		var styledMapOptions = {
-			name:'Plain'
-		};
-		var myMapType = new google.maps.StyledMapType(style1, styledMapOptions);
-		Map.map.mapTypes.set('plain', myMapType);
-		Map.map.setMapTypeId('plain');
+		//var styledMapOptions = {
+		//	name:'Plain'
+		//};
+		//var myMapType = new google.maps.StyledMapType(style1, styledMapOptions);
+		//Map.map.mapTypes.set('plain', myMapType);
+		//Map.map.setMapTypeId('plain');
 		Map.layers[0] = {};
 		Map.layers[0].geom=[];
-		
-		{% include "features/draw_features.html" %}
 			
+		window.features = {{features_json|safe}};
+		draw_features(features);  // This function is in mapper.js
+		Map.resize(Map.layers[0]);
 	});
 	</script>
 	

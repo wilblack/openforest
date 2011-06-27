@@ -1,0 +1,19 @@
+<div class="infowindow" style="width:{%if feature.image %}420px{%else%}210px{%endif%};">
+
+  <div class="left {%if feature.image %}half{%endif%}" >
+    <h4><a href="{{ feature.get_absolute_url }}">{{feature.title}}</a><h4>
+    Posted by 
+    {% if user.is_authenticated %}
+    <em><a href="{% url profile_detail feature.author.username %}">{{feature.author.username}}</a></em>
+    {%else%}
+    <em>{{feature.author.username}}</em>
+    {% endif %}
+    <p>
+    {{feature.body|truncatewords:"150" }}
+    </p>		
+  </div>
+  <div class="right {%if feature.image %}half{%endif%}">
+  
+    {%if feature.image %}<img src='{{feature.image.get_feature_thumbnail_url}}'></img>{% endif %}
+  </div>
+</div>

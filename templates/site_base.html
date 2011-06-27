@@ -21,8 +21,13 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}pinax/css/jquery.autocomplete.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}bookmarks/css/bookmarks.css" />
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javasctipt" src="http://173.255.213.55/wb/media/js/jquery.pikachoose.js"></script>
+    
+    <!-- 
     <script type="text/javascript" src="http://173.255.213.55/wb/media/js/jquery-1.5.2.min.js"></script>
-    <script type="text/javascript" src="http://173.255.213.55/wb/media/js/gmap-0.2.js"></script>
+     <script type="text/javascript" src="http://173.255.213.55/wb/media/js/gmap-0.2.js"></script>
+    -->
+   
     <link rel="stylesheet" href="http://173.255.213.55/wb/media/css/base-1.0.css" />
     {% block extra_head %}{% endblock %}
 {% endblock %}
@@ -49,15 +54,15 @@
         <ul class="tabs">{% spaceless %}
             <li id="tab_features"><a href="{% url feature_list_all %}">{% trans "Projects" %}</a></li>
             <li id="tab_profile"><a href="{% url profile_detail user.username %}">{% trans "My Profile" %}</a></li>
-            <li id="tab_photos"><a href="{% url photos %}">{% trans "Photos" %}</a></li>
+            <li id="tab_photos"><a href="{% url photos_yours %}">{% trans "Photos" %}</a></li>
             {# <li id="tab_blogs"><a href="{% url blog_list_all %}">{% trans "Blogs" %}</a></li> #}
             
             {# <li id="tab_events"><a href="{% url events_list_all %}">{% trans "Events" %}</a></li> #}
             <li id="tab_tribes"><a href="{% url tribe_list %}">{% trans "Tribes" %}</a></li>
             {# <li id="tab_tweets"><a href="{% url tweets_you_follow %}">{% trans "Tweets" %}</a></li> #}
-            <li id="tab_bookmarks"><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></li>
+            {#<li id="tab_bookmarks"><a href="{% url all_bookmarks %}">{% trans "Bookmarks" %}</a></li>#}
             {# <li id="tab_swaps"><a href="{% url offer_list_all %}">{% trans "Swaps" %}</a></li> #}
-            <li id="tab_locations"><a href="{% url loc_yours %}">{% trans "Locations" %}</a></li>
+            {#<li id="tab_locations"><a href="{% url loc_yours %}">{% trans "Locations" %}</a></li>#}
             <li id="tab_inbox"><a href="{% url messages_inbox %}">{% trans "Inbox" %} ({{ combined_inbox_count }})</a></li>
         {% endspaceless %}</ul>
     {% endif %}

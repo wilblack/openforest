@@ -20,9 +20,7 @@ from pinax.apps.photos.models import Image
 from pinax.apps.topics.models import Topic
 from pinax.apps.tribes.models import Tribe
 
-
 handler500 = "pinax.views.server_error"
-
 
 tweets_feed_dict = {"feed_dict": {
     "all": TweetFeedAll,
@@ -36,7 +34,6 @@ blogs_feed_dict = {"feed_dict": {
 }}
 
 bookmarks_feed_dict = {"feed_dict": {"": BookmarkFeed }}
-
 
 urlpatterns = patterns("",
     #url(r"^$", direct_to_template, {
@@ -70,6 +67,7 @@ urlpatterns = patterns("",
     url(r"^feeds/tweets/(.*)/$", "django.contrib.syndication.views.feed", tweets_feed_dict),
     url(r"^feeds/posts/(.*)/$", "django.contrib.syndication.views.feed", blogs_feed_dict),
     url(r"^feeds/bookmarks/(.*)/?$", "django.contrib.syndication.views.feed", bookmarks_feed_dict),
+    url(r"^wiki/", include('wakawaka.urls')),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together

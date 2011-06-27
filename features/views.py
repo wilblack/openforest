@@ -8,7 +8,6 @@ from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.generic import date_based
 
-
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -45,6 +44,8 @@ def features(request, username=None, template_name="features/features.html"):
 
 def post(request, username, year, month, slug,
          template_name="features/post.html"):
+    
+    ''' The main Project and Feature view'''
     post = Feature.objects.filter(
         slug = slug,
         publish__year = int(year),
@@ -59,10 +60,16 @@ def post(request, username, year, month, slug,
     if post[0].status == 1 and post[0].author != request.user:
         raise Http404
     
-    features = post[0].feature_set.all() 
+    features = post[0].feature_set.all()
+    features = post | features 
+        
     featureList=[f.json for f in features]
+        
+    for i,f in enumerate(features):
+        html = render_to_response("features/infowindow.html",{"feature":f}).content
+        featureList[i]["html"]=html
     
-    
+        
     return render_to_response(template_name, {
         "post": post[0],
         "features":json(featureList),

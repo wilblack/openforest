@@ -34,7 +34,7 @@ def features(request, username=None, template_name="features/features.html"):
     ''' This view is a list of features. If user is authenticated they get all their features. 
         If the user is not logged in they all features. 
     '''
-    blogs = Feature.objects.filter(status=2, feature_of__isnull=True).select_related(depth=1).order_by("-publish")
+    blogs = Feature.objects.filter(status=2, feature_of__isnull=True).order_by("-publish")
     if username is not None:
         user = get_object_or_404(User, username=username.lower())
         blogs = blogs.filter(author=user)

@@ -18,6 +18,7 @@
     <form class="uniForm" id="edit-profile" method="POST" action="">
         {% csrf_token %}
         <fieldset class="inlineLabels">
+            <h3>First zoom into the location of you feature by doubling clicking on the map. Then fill out the field below.</h3>
             {% include "features/gmap_new.html" %}
             {{ blog_form|as_uni_form }}
             <div class="form_block">

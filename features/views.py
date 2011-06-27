@@ -13,7 +13,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from simplejson import dumps as json
-from features.models import Post, Feature
+from features.models import Post, Feature, FeatureType
+from pinax.apps.photos.models import PhotoSet
 from features.forms import *
 from threadedcomments.models import FreeThreadedComment
 
@@ -142,6 +143,11 @@ def new(request, form_class=FeatureForm, template_name="features/new.html"):
                 else:
                     blog.creator_ip = request.META['REMOTE_ADDR']
                 blog.save()
+                ps = PhotoSet(name=request.POST['slug'])
+                ps.description = request.POST['title']+" photoset"
+                ps.save()               
+                blog.photoset=ps
+                blog.save()
                 # @@@ should message be different if published?
                 messages.add_message(request, messages.SUCCESS,
                     ugettext("Successfully saved project '%s'") % blog.title
@@ -158,7 +164,8 @@ def new(request, form_class=FeatureForm, template_name="features/new.html"):
         blog_form = form_class()
     
     return render_to_response(template_name, {
-        "blog_form": blog_form
+        "blog_form": blog_form,
+        'featureType':FeatureType.objects.all()
     }, context_instance=RequestContext(request))
 
 

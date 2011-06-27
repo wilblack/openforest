@@ -145,7 +145,7 @@ class Feature(Post):
 class Product(models.Model):
     name = models.CharField(max_length=50)
     type = models.ForeignKey('ProductType')
-    feature = models.ManyToMany(Feature)
+    feature = models.ManyToManyField(Feature)
     
     def __unicode__(self):
         return self.name

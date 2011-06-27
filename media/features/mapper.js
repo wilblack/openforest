@@ -65,8 +65,7 @@ function draw_features(features){
 				});
 				
 				break;
-		};
-		
+		};	
 	}
 }
 
@@ -81,5 +80,7 @@ function infowindowHTML(feature){
 	if (feature.image){ html += "<img src='"+feature.image+"'></img>";}
 	html += "</div>";
 	return html
-
 }
+
+
+

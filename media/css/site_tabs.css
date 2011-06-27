@@ -20,7 +20,8 @@ body.tribes #tab_tribes,
 body.tweets #tab_tweets,
 body.bookmarks #tab_bookmarks,
 body.locations #tab_locations,
-body.inbox #tab_inbox
+body.inbox #tab_inbox,
+.help
 {
     margin: 0; /* to compensate for border */
     padding: 5px 0 5px;
@@ -29,4 +30,7 @@ body.inbox #tab_inbox
     border-top: 1px solid #000; /* tab border */
     border-right: 1px solid #000; /* tab border */
 }
-
+.help {
+	border: 1px solid #000;
+	padding: 3px;
+}

@@ -1,18 +1,23 @@
 <div id="div_id_map" class="ctrlHolder">
+ 
+ <div id="map"></div>
   <label for='map'>New feature</label>
   
  <select onchange='set_geomtype(this);'>
    <option value='0'>Select Feature</option>
-   <option value='point'>Tree</option>
-   <option value='polygon'>Woodlot</option>
-   <option value='polygon'>Park</option>
-   <option value='polygon'>Forest</option>
-   <option value='polygon'>Garden</option>
+   {% for ft in featureType %}
+   <option id={{ft.id}} value={{ft.geomtype}}>{{ft.name}}</option>
+   {% endfor %}
   </select>
+    
+  <span onclick="$('#featureHelp').toggle();" class="fauxLink"> Help</span>
  </div>
  
- <p id='map-console' class="formHint"></p>
-<div id="map"></div>
+  <p id='map-console' class="formHint"></p>
+
+<div class="hidden help" id="featureHelp">
+{% include "features/featureHelp.html" %}
+</div>
 
 <script type='text/javascript'>
 
@@ -25,17 +30,20 @@ function set_geomtype(that){
 	var msg='';
 	var val=0;
 	switch (type){
-		case 'point':
+		case '1':   	//Point
+			type='point'
 			msg="Place the marker on the map by clicking on your projects location.";
 			val=1;
 			break;
-		case 'polygon':
+		case '3': 	//Polygon
 			msg="Draw the area of your project by clicking on the markers. You can add new corners by clicking on the black border.";
+			type='polygon'
 			val=3;
 			break;
 	}	
 	$('#map-console').html(msg);
 	Map.createFeature(type);
 	$("[name=geomtype]").val(val);
+	$("[name=featuretype]").val($(that).attr());
 }			
 </script>

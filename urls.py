@@ -68,6 +68,7 @@ urlpatterns = patterns("",
     url(r"^feeds/posts/(.*)/$", "django.contrib.syndication.views.feed", blogs_feed_dict),
     url(r"^feeds/bookmarks/(.*)/?$", "django.contrib.syndication.views.feed", bookmarks_feed_dict),
     url(r"^wiki/", include('wakawaka.urls')),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/site_media/static/img/favicon.ico'}),
 )
 
 ## @@@ for now, we'll use friends_app to glue this stuff together

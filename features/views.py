@@ -28,8 +28,6 @@ try:
 except ImportError:
     friends = False
 
-
-
 def features(request, username=None, template_name="features/features.html"):
     ''' This view is a list of features. If user is authenticated they get all their features. 
         If the user is not logged in they all features. 
@@ -198,9 +196,16 @@ def edit(request, id, form_class=FeatureForm, template_name="features/edit.html"
     else:
         blog_form = form_class(instance=post)
     
+    
+    features = Feature.objects.get(pk=id)
+    #features = post | features 
+    featureList=[features.json]
+    
     return render_to_response(template_name, {
         "blog_form": blog_form,
         "post": post,
+        "features":json(featureList),
+        'featureType':FeatureType.objects.all(),
     }, context_instance=RequestContext(request))
 
 def list(request):

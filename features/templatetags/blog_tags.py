@@ -7,7 +7,6 @@ from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 
 
-
 register = template.Library()
 @register.inclusion_tag("features/feature_item.html")
 def show_feature(blog_post):

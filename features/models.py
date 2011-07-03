@@ -90,7 +90,7 @@ class FeatureType(models.Model):
     name = models.CharField(max_length=25)
     about = models.TextField()
     geomtype = models.IntegerField('Geometry type', choices=GEOMTYPE_CHOICES) 
-    
+        
     def __unicode__(self):
         return self.name
 
@@ -138,6 +138,7 @@ class Feature(Post):
              'geomtype':self.geomtype,
              'feature_of':feature_of,
              'image':image,
+             'featuretype':self.featuretype.id
              }
         return out
 

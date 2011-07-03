@@ -11,13 +11,13 @@
     <h2><a href="{{ blog_post.get_absolute_url }}">{{ blog_post.title }}</a></h2>
     <div class="blog-post-tease">
         {% if blog_post.tease %}
-             {% with blog_post.tease|truncatewords:"150" as body %}
+             {% with blog_post.tease|truncatewords:"30" as body %}
 
                   {{ body|safe }} 
                                             
             {% endwith %}
         {% else %}
-            {% with blog_post.body|truncatewords:"150" as body %}
+            {% with blog_post.body|truncatewords:"30" as body %}
                 {% if blog_post.markup %}
                     {% switch blog_post.markup %}
                         {% case 'rst' %} {{ body|safe }} {% endcase %}

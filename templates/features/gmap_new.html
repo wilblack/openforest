@@ -44,6 +44,6 @@ function set_geomtype(that){
 	$('#map-console').html(msg);
 	Map.createFeature(type);
 	$("[name=geomtype]").val(val);
-	$("[name=featuretype]").val($(that).attr());
+	$("[name=featuretype]").val($(that).find("option:selected").attr("id"));  //This should be on val=fid
 }			
 </script>

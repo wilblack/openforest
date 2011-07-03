@@ -1,0 +1,65 @@
+<div id="div_id_map" class="ctrlHolder">
+ 
+ <div id="map"></div>
+  <label for='map'>New feature</label>
+  
+ <select id="featuresList" onchange='set_geomtype(this);'>
+   <option value='0'>Select Feature</option>
+   {% for ft in featureType %}
+   <option id={{ft.id}} value={{ft.geomtype}}>{{ft.name}}</option>
+   {% endfor %}
+  </select>
+    
+  <span onclick="$('#featureHelp').toggle();" class="fauxLink"> Help</span>
+ </div>
+ 
+  <p id='map-console' class="formHint"></p>
+
+<div class="hidden help" id="featureHelp">
+{% include "features/featureHelp.html" %}
+</div>
+
+<script type='text/javascript'>
+
+Map.height='400px';
+Map.width='600px';	
+
+Map.init('#map');	
+Map.layers[0] = {};
+Map.layers[0].geom=[];
+
+window.features = {{features|safe}}
+window.f_initial = {{features|safe}}			// Iniital data for feature to esily reset
+//draw_features(features);  // This function is in mapper.js
+//Map.resize(Map.layers[0]);
+
+function set_geomtype(that){
+	Map.clear_all();
+	var type= $(that).val();
+	var msg='';
+	var val=0;
+	switch (type){
+		case '1':   	//Point
+			type='point'
+			msg="Place the marker on the map by clicking on your projects location.";
+			val=1;
+			break;
+		case '3': 	//Polygon
+			msg="Draw the area of your project by clicking on the markers. You can add new corners by clicking on the black border.";
+			type='polygon'
+			val=3;
+			break;
+	}	
+	$('#map-console').html(msg);
+	
+	Map.createFeature(type);
+	$("[name=geomtype]").val(val);
+	$("[name=featuretype]").val($(that).find("option:selected").attr("id"));  //This should be on val=fid
+}		
+
+$(document).ready(function(){
+	$("#"+features[0].featuretype).attr("selected","selected");
+	Map.editFeature(features[0]);
+});
+
+</script>

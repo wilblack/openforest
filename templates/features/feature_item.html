@@ -6,9 +6,9 @@
 {% load gravatar %}
 {% load extra_tagging_tags %}
 
-<div class="blog-post left ">
+
+<div class="blog-post left" onclick="window.location = '{{ blog_post.get_absolute_url }}'">
     <h2><a href="{{ blog_post.get_absolute_url }}">{{ blog_post.title }}</a></h2>
-    
     <div class="blog-post-tease">
         {% if blog_post.tease %}
              {% with blog_post.tease|truncatewords:"150" as body %}

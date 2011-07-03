@@ -10,6 +10,7 @@
 	<script src="http://173.255.213.55/wb/media/js/jquery-1.5.2.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="http://173.255.213.55/wb/media/js/gmap-0.2.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}features/mapper.js"></script>
+	<link rel="stylesheet" href="{{STATIC_URL}}features/css/features.css"/>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		Map.width="800px";
@@ -49,11 +50,15 @@
     </p>
         
     <div id="map_canvas"></div>
-        
-    <hr />
-    <h2>Latest Features Added</h2>
+    <div id="feature-list-header">      
+    <h2 class="left">Latest Features Added</h2> <a href="{% url feature_list_all %}">Show all</a>
+    </div>
+    <div class="clearFix"></div>
     {% for f in features %}
+    	<div class="featureRow">
     	{% show_feature f %}
+    	{% show_feature_meta f %}
+    	</div>
     {%endfor%}
     
     {% if user.is_authenticated %}

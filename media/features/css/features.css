@@ -22,8 +22,8 @@
 }
 
 #featureList ul {
-	list-style-type: none;
-	padding:0px;
+	
+	padding:20px;
 }
 
 #featureList a:hover {background-color:#FFF;}

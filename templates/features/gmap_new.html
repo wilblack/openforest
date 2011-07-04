@@ -23,7 +23,9 @@
 
 Map.height='400px';
 Map.width='600px';	
+Map.mapType = google.maps.MapTypeId.HYBRID;		
 Map.init('#map');	
+
 function set_geomtype(that){
 	Map.clear_all();
 	var type= $(that).val();

@@ -21,6 +21,13 @@
 	padding-left:10px;
 }
 
+#featureList ul {
+	list-style-type: none;
+	padding:0px;
+}
+
+#featureList a:hover {background-color:#FFF;}
+
 /* ---------- Used on features ----------*/ 
 .feature-meta {width:380px;}
 .feature-meta .left {padding:5px;}

@@ -30,7 +30,9 @@
     <script type="text/javascript" src="http://173.255.213.55/wb/media/js/gmap-0.2.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}features/mapper.js"></script>
     <link type="text/css" href="http://173.255.213.55/wb/media/css/pikachoose/styles/tof-features-gallery.css" rel="stylesheet" />
-
+	
+	<link rel="stylesheet" href="{{STATIC_URL}}features/css/features.css"/>
+	
     <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for All Users" href="/feeds/posts/all/" />
     <link rel="alternate" type="application/atom+xml" title="Blog Post Feed for User {{ post.author.username }}" href="/feeds/posts/only/{{ post.author.username }}/" />
 	<script type='text/javascript'>
@@ -54,7 +56,13 @@
 
 {% block body %}
     <div class="blog-post">
-        <h2>{{ post.title }}</h2>
+    	<div class="feature-list-header">           
+        <h2 class="left">{{ post.title }}</h2>
+        {% ifequal post.author request.user %}
+            <a href="{% url feature_edit post.id %}">Edit {% if post.project_of %}Feature{% else %}Project{%endif%}</a>
+            {% endifequal %}
+        </div>
+        <div class="clearFix"></div>
         <div class="blog-meta"><p>Posted by: <a href="{% url profile_detail post.author.username %}">{% user_display post.author %}</a> on {{ post.publish|date }}</p></div>
         <div class="blog-tags">
             <p>{% silk "tag_blue" %}
@@ -62,9 +70,6 @@
             {% for tag in tags %}
                 <a href="/tags/{{ tag }}">{{ tag }}</a>
             {% endfor %}</p>
-            {% ifequal post.author request.user %}
-                <a href="{% url feature_edit post.id %}">Edit {% if post.project_of %}Feature{% else %}Project{%endif%}</a>
-            {% endifequal %}
         </div>
         
         

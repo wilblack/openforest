@@ -1,10 +1,11 @@
 /*----- positioning classes -----*/
 .clearFix { clear: both }
+.left { float: left; }
+.right { float: right; }
+
 .center { margin-left: auto; margin-right: auto; display: block; }
 .hidden { display:none; }
 .shown { display: inline-block; }
-.left { float: left; }
-.right { float: right; }
 .topleft { position: relative; top: -10px; right: 10px; float: left; margin: 0;}
 
 .tt { 
@@ -13,26 +14,30 @@
 }
 .tt:hover{cursor:help;}
 
-/*-------- Used on homepage.html and features.html ------------*/
-.featureRow {border:1px;}
-.featureRow .right {width:200px;}
-
 /*-------- Homepage ------------*/
-#feature-list-header a {
+.feature-list-header a {
 	position:relative;
 	top:21px;
 	padding-left:10px;
 }
 
+/* ---------- Used on features ----------*/ 
+.feature-meta {width:380px;}
+.feature-meta .left {padding:5px;}
 
-/* ---------- Used on features ----------*/
-.blog-post {
-	width:580px;
-	height:100px;	
+.featureRow .blog-post {
+	width:420px;
+	height:160px;	
 }
-.blog-post:hover {
+
+.featureRow .blog-post:hover {
 	background-color:#DEF;
 	cursor:pointer;
 }
 
-.featureRow {border-bottom:1px dotted black;}
+.featureRow {
+	border-bottom:1px dotted black;
+	padding-top:10px;	
+}
+.featureRow .blog-post-tease {width:100%;}
+

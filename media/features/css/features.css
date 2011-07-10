@@ -1,3 +1,6 @@
+/*-------- Override Pinax CSS --------*/
+#body {padding:0 !important;}
+
 /*----- positioning classes -----*/
 .clearFix { clear: both }
 .left { float: left; }
@@ -13,6 +16,7 @@
 	background-color:#FFFFCC;	
 }
 .tt:hover{cursor:help;}
+/*-------------------------------------------*/
 
 /*-------- Homepage ------------*/
 .feature-list-header a {
@@ -22,11 +26,11 @@
 }
 
 #featureList ul {
-	
-	padding:20px;
+	padding-left:20px;
 }
 
 #featureList a:hover {background-color:#FFF;}
+/*-------------------------------------------*/
 
 /* ---------- Used on features ----------*/ 
 .feature-meta {width:380px;}
@@ -47,4 +51,11 @@
 	padding-top:10px;	
 }
 .featureRow .blog-post-tease {width:100%;}
+/*-------------------------------------------*/
 
+/*----------- General Layout --------------------*/
+
+
+
+
+/*-----------------------------------------------*/

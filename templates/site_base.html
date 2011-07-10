@@ -70,6 +70,10 @@
     {% endif %}
 {% endblock %}
 
+{% block leftSidepanel %}
+	{% include "left_sidepanel.html" %}
+{% endblock %}
+
 {% block footer %}
 <div class="legal">
     {% trans "&copy; 2010 &lt;Ollala Creek Mushroom Company&gt;" %}
@@ -83,5 +87,7 @@
 {% block extra_body_base %}
     {% ga %}
     <script type="text/javascript" src="{{ STATIC_URL }}pinax/js/topics.js"></script>
+    
+    
     {% block extra_body %}{% endblock %}
 {% endblock %}

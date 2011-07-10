@@ -9,7 +9,9 @@
 
 <h3><a href="/invitations/">Invite others to join</a></h3>
 
- 
+<h3><a href="{% url feature_list_yours %}">{% trans "Your Projects" %}</a></h3>
+
+<div></div> 
  {% else %} {# not user.is_authenticated #}
           {% url acct_signup as signup_url %}
           {% url acct_login as login_url %}

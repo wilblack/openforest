@@ -23,7 +23,7 @@ MARKUP_CHOICES = getattr(settings, "MARKUP_CHOICES", [])
 #SHARE_CHOICES =  [(1,'Private'), (2,'Public')]
 STATUS_CHOICES = ((1, _("Private")),(2, _("Public")),)
 GEOMTYPE_CHOICES = [(1,'Point'),(2,'Polyline'),(3,'Polygon')]
-FEATURETYPE_CHOICES = [(1,'Lot'),(2,'Marker'),(3,'Patch'), (4,'Path'), (5,'Tree')]
+#FEATURETYPE_CHOICES = [(1,'Lot'),(2,'Marker'),(3,'Patch'), (4,'Path'), (5,'Tree')]
 
 class Post(models.Model):
     """

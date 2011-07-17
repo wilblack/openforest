@@ -17,6 +17,11 @@ def show_feature(blog_post):
 def show_project(blog_post, features):
     return {"blog_post": blog_post,
             "features":features}
+    
+@register.inclusion_tag("features/project_list.html")
+def project_list(user):
+    return {"projects":user.added_posts.all(),
+            "user":user}    
 
 @register.inclusion_tag("features/meta.html")
 def show_feature_meta(blog_post):

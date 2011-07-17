@@ -4,6 +4,7 @@
 {% load group_tags %}
 {% load microblogging_tags %}
 {% load uni_form_tags %}
+{% load blog_tags %}
 
 {% if user.is_authenticated %}
 
@@ -11,7 +12,6 @@
 
 <h3><a href="{% url feature_list_yours %}">{% trans "Your Projects" %}</a></h3>
 
-<div></div> 
  {% else %} {# not user.is_authenticated #}
           {% url acct_signup as signup_url %}
           {% url acct_login as login_url %}

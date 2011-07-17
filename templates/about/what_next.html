@@ -53,4 +53,31 @@
                 {% endifsetting %}
             </p>
         {% endif %}
+        
+        <div id="quickStart-overlay" class="hidden">
+          	{% include "about/intro.html" %}
+        </div>
 {% endblock %}
+
+
+{% block extra_body %}
+<script typ="text/javascript" src="http://173.255.213.55/wb/media/js/jquery-ui-1.8.14.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://173.255.213.55/wb/media/css/themes/redmond/jquery-ui-1.8.14.custom.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#quickStart-overlay" ).dialog({
+			width:600,
+			height:500,
+			modal: true,
+			buttons:{
+				Close: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
+</script>
+		
+{% endblock %}		
+
+

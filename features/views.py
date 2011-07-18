@@ -212,6 +212,8 @@ def list(request):
     
     features = Feature.objects.filter(feature_of__isnull=True)
     out = [{'title':f.title, 'fid':f.id} for f in features]
+    if 'apk' in request.GET:
+	out = ['title: %s fid: %s'%(f.title, f.id) for f in features]
         
     if 'callback' in request.GET:
         out = request.GET['callback']+"("+json+")"        

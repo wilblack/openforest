@@ -33,13 +33,20 @@ function set_geomtype(that){
 	var val=0;
 	switch (type){
 		case '1':   	//Point
-			type='point'
+			type='point';
 			msg="Place the marker on the map by clicking on your projects location.";
 			val=1;
 			break;
+
+		case '2':    //Path		  
+      type='polyline';
+    	msg="Draw the path by draggin the markers. You can add new markers by clicking on the black lines.";
+      val=2;
+      break;
+      
 		case '3': 	//Polygon
 			msg="Draw the area of your project by clicking on the markers. You can add new corners by clicking on the black border.";
-			type='polygon'
+			type='polygon';
 			val=3;
 			break;
 	}	

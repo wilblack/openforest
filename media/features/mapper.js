@@ -9,6 +9,7 @@ function draw_features(features){
 		var f=features[i];
 		var PROJECT_COLOR='#33FF11';
 		var FEATURE_COLOR ='#FF6655';
+		var POLYLINE_COLOR = '#CC9933';
 		var geom = f.geom;
 				
 		//html = infowindowHTML(f);
@@ -31,6 +32,38 @@ function draw_features(features){
 					Map.layers[0].geom[this.index].infowindow.open(Map.map,this);
 				});
 				break;
+				
+			case 2:     // Polyline
+				var mapObj = Map.list2polyline(geom);
+				var color = POLYLINE_COLOR;
+				var zIndex = -10;
+				var opacity=0;
+				if (f.feature_of) {
+				  var color = POLYLINE_COLOR;
+				  var zIndex=0;
+				  var opacity = .1;
+				}				
+				Map.layers[0].geom[i] = mapObj;
+				Map.layers[0].geom[i].setOptions({
+					'strokeColor':color,
+					//'fillColor':color,
+					//'fillOpacity':.1,
+					'index':i,
+					'zIndex':zIndex,
+					//'fillOpacity':opacity,
+				});
+				Map.layers[0].geom[i].setMap(Map.map);			
+				Map.layers[0].geom[i].infowindow = infowindow;    
+				google.maps.event.addListener(mapObj, 'click', function(){
+					p = new google.maps.Marker({
+						position:this.getPath().getAt(0),
+						map:Map.map,
+						visible:false,
+					});
+					Map.layers[0].geom[this.index].infowindow.open(Map.map,p);
+				});	
+				break;
+			
 			case 3:			// Polygon
 				var mapObj = Map.list2polygon(geom);
 				var color = PROJECT_COLOR
@@ -41,7 +74,6 @@ function draw_features(features){
 				  var zIndex=0;
 				  var opacity = .1;
 				}				
-
 				Map.layers[0].geom[i] = mapObj;
 				Map.layers[0].geom[i].setOptions({
 					'strokeColor':color,
@@ -50,10 +82,8 @@ function draw_features(features){
 					'index':i,
 					'zIndex':zIndex,
 					'fillOpacity':opacity,
-					
 				});
-				Map.layers[0].geom[i].setMap(Map.map);
-								
+				Map.layers[0].geom[i].setMap(Map.map);			
 				Map.layers[0].geom[i].infowindow = infowindow;    
 				google.maps.event.addListener(mapObj, 'click', function(){
 					p = new google.maps.Marker({
@@ -62,8 +92,7 @@ function draw_features(features){
 						visible:false,
 					});
 					Map.layers[0].geom[this.index].infowindow.open(Map.map,p);
-				});
-				
+				});	
 				break;
 		};	
 	}

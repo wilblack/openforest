@@ -16,6 +16,13 @@ a, a:visited {
 img {
     border: 0;
 }
+
+.gallery-photo-thumb img:hover, .featureRow img:hover {
+  -moz-box-shadow: 8px 8px 5px #888;
+  -webkit-box-shadow: 8px 8px 5px #888;
+  box-shadow: 8px 8px 5px #888;
+}
+
 dt {
     font-weight: bold;
 }

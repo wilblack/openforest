@@ -71,11 +71,12 @@
             {% endfor %}</p>
         </div>
         
-        
         <div>
 	      <div id="map_canvas" class="left" style="width:650px; height:500px;"></div>
 	      
 	      <div id="featureList">
+	      	 <div>
+    	  </div>
 	      	<h3>Features:</h3>
 	      	{% if  post.feature_set.all %}
 	      	<ul>
@@ -92,7 +93,8 @@
     	</div>
     	<div class="clearFix"></div>
     	<div id="post-body">
-    	<h3>About {{post.title}}</h3>
+    	   {% include "widgets/social_plugins.html" %}
+    	  <h3 >About {{post.title}}</h3>
     		{% if post.markup %}
             	{% switch post.markup %}
                 	{% case 'rst' %} {{ post.body|safe }} {% endcase %}
@@ -106,8 +108,7 @@
     	<div id="pikachoose">
     		<h3>Photo Gallery</h3>
     		{% with post.photoset.image_set.all as photos %}
-    		{% if photos %}
-                    
+    		{% if photos %}   
                     <ul id="pikame" class="jcarousel-skin-pika">
                     {% for photo in photos %}
                         <!-- 
@@ -123,8 +124,6 @@
                 {% endif %}
                {% endwith %}
     	</div>
-        
-        
         {# show_feature post #}
     </div>
     

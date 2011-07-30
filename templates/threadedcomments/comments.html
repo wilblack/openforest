@@ -9,7 +9,7 @@
 {% autopaginate responses %}
 
 <ul class="responses">
-    {% for response in responses %}
+    {% for response in responses|dictsortreversed:"date_submitted" %}
         <li class="{% cycle even,odd %} thread-{{ response.depth }} clearfix">
             <div class="meta">
                 <div class="avatar">{% avatar response.user 40 %}</div>
@@ -28,7 +28,7 @@
                 <a href="javascript:toggle_comment_form({{ response.id }})">{% trans "Reply to This Post" %}</a>
                 <form class="hidden" method="POST" action="{% get_comment_url object response %}" id="comment_form_{{ response.id }}">
                     {% csrf_token %}
-                    <table><tr><td><textarea rows="10" cols="40" name="comment"></textarea></td></tr>
+                    <table><tr><td><textarea rows="6" cols="40" name="comment"></textarea></td></tr>
                     <tr><td><input type="submit" value="{% trans "Post Response" %}" /></td></tr></table>
                     <input type="hidden" name="next" value="{{ request.path }}" />
                 </form>
@@ -45,7 +45,7 @@
             {% csrf_token %}
                 <div class="ctrlHolder">
                     <label for="id_comment">Comment</label>
-                    <textarea id="id_comment" rows="10" cols="40" name="comment"></textarea>
+                    <textarea id="id_comment" rows="6" cols="40" name="comment"></textarea>
                 </div>
                 <div class='right'>
                 	<label for='updateType'>Update Type</label>

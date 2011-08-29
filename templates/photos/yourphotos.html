@@ -23,7 +23,8 @@
             <a href="{% groupurl photo_edit group id=photo.id %}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a><br />
             from <a href="{% url profile_detail photo.member.username %}">{% user_display photo.member %}</a><br />
             {% silk "comment" %}<a href="{% groupurl photo_details group id=photo.id %}/#photocomments">{% get_comment_count for photo as commentcount %} {{ commentcount }} Comments</a><br />
-            Viewed {{ photo.view_count }} times
+            Viewed {{ photo.view_count }} times<br />
+            belongs to {{ photo.photoset.values_list.0.2 }} 
         </div>
         {% endfor %}
         </div>

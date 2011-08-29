@@ -20,6 +20,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
 class FeatureAdmin(admin.ModelAdmin):
     list_display = ["title", "publish", "status", "geomtype", "feature_of","featuretype",'image']
     list_filter = ["publish", "status","feature_of"]
+    list_editable = ['status',]
     search_fields = ["title", "body", "tease"]
     prepopulated_fields = {"slug": ["title"]}
 

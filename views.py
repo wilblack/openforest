@@ -4,7 +4,7 @@ from django.template import RequestContext
 import json
 
 def home(request):
-    features = Feature.objects.all().order_by("-updated_at")[0:6]
+    features = Feature.objects.filter(status=2).order_by("-updated_at")[0:6]
     
     features_json = [f.json for f in features]
     myFeatures = []

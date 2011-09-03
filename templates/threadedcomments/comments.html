@@ -4,7 +4,7 @@
 {% load uni_form_tags %}
 {% load pagination_tags %}
 {% load avatar_tags %}
-
+{% load season_tags %}
 {% get_threaded_comment_tree for object as responses %}
 {% autopaginate responses %}
 
@@ -14,7 +14,7 @@
             <div class="meta">
                 <div class="avatar">{% avatar response.user 40 %}</div>
                 <div class="details"><a href="{% url profile_detail response.user.username %}">{% user_display response.user %}</a></div>
-                {{ response.date_submitted|date }}
+                {{ response.date_submitted|date }}{{ response.date_submitted|get_season }}
             </div>
             <div class="bulk">
                 <div class="body">{{ response.comment|urlize|linebreaks }}</div>

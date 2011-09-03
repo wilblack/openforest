@@ -13,7 +13,7 @@ from tagging.models import Tag
 from pinax.apps.photos.models import PhotoSet, Image
 
 from threadedcomments.models import ThreadedComment
-
+from seasons.models import Season
 if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 else:

@@ -41,7 +41,10 @@ urlpatterns = patterns("",
     #}, name="home"),
     
     url(r"^$", "views.home", name="home"),
+    
     url(r"^admin/invite_user/$", "pinax.apps.signup_codes.views.admin_invite_user", name="admin_invite_user"),
+    
+    url(r"^admin/csv/", include('csvimporter.urls')),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^about/", include("about.urls")),
     url(r"^account/", include("pinax.apps.account.urls")),

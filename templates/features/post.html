@@ -8,6 +8,7 @@
 {% load tagging_tags %}
 {% load blog_tags %}
 {% load theme_tags %}
+{% load season_tags %}
 
 {% block head_title %}{% blocktrans %}Blog Post{% endblocktrans %} : {{ post.title }}{% endblock %}
 {% block jquery_src %}http://173.255.213.55/wb/media/js/jquery-1.5.2.min.js{%endblock%}
@@ -62,7 +63,9 @@
             {% endifequal %}
         </div>
         <div class="clearFix"></div>
-        <div class="blog-meta"><p>Posted by: <a href="{% url profile_detail post.author.username %}">{% user_display post.author %}</a> on {{ post.publish|date }}</p></div>
+        <div class="blog-meta"><p>Posted by: <a href="{% url profile_detail post.author.username %}">{% user_display post.author %}</a> 
+          on {{ post.publish|date }} {{ post.publish|get_season }}</p></div>
+        
         <div class="blog-tags">
             <p>{% silk "tag_blue" %}
             {% tags_for_object post as tags %}

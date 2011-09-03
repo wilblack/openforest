@@ -123,6 +123,12 @@ class Feature(Post):
             "month": "%02d" % self.publish.month,
             "slug": self.slug
         })    
+    @property    
+    def season(self):
+        d = self.created_at
+        season = Season.objects.get_season(d)
+        return season 
+    
     @property
     def json(self):
         import json

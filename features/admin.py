@@ -1,6 +1,8 @@
 from features.models import Post, Feature, Product, ProductType, FeatureType
 from django.contrib import admin
 
+from actions import export_as_csv
+admin.site.add_action(export_as_csv)
 
 
 #class PostAdmin(admin.ModelAdmin):

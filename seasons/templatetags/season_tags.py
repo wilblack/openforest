@@ -10,7 +10,7 @@ register = template.Library()
 @register.filter
 def get_season(d, autoescape=None):
     name =  Season.objects.get_season(d).name
-    year = d.year
+    year = d.year()
     color = Season.objects.get_season(d).color
     result = "<span style='color:#FFFFFF; background:%s; padding:0px 3px 0px 3px; '>"%color
     

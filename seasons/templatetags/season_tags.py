@@ -14,7 +14,7 @@ def get_season(d, autoescape=None):
     color = Season.objects.get_season(d).color
     result = "<span style='color:#FFFFFF; background:%s; padding:0px 3px 0px 3px; '>"%color
     
-    result += "<strong> %s %s </strong> </span>" %(name, year)
+    result += "<strong> %s year %s </strong> </span>" %(name, year)
     return mark_safe(result)
 get_season.needs_autoescape = True
 

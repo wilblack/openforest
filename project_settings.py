@@ -142,7 +142,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "messages.context_processors.inbox",
     "friends_app.context_processors.invitations",
     
-    "tof_beta.context_processors.combined_inbox_count",
+    "openforest.context_processors.combined_inbox_count",
 ]
 
 COMBINED_INBOX_COUNT_SOURCES = [
